@@ -21,7 +21,8 @@ int main(int argc, char* argv[])
 	{
 		int a = std::atoi(argv[i]), b = std::atoi(argv[i + 1]);
 		interval.push_back(std::make_pair(a, b));
-		m = (b > m ? b : m);
+		if(b >= a)
+			m = (b > m ? b : m);
 	}
 	
 	std::vector<int> simple;
