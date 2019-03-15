@@ -20,12 +20,8 @@ int main(int argc, char* argv[])
 	for(int i = 1; i < argc; i+=2)
 	{
 		int a = std::atoi(argv[i]), b = std::atoi(argv[i + 1]);
-		if(a <= b)
-		{
-			interval.push_back(std::make_pair(a, b));
-			m = (b > m ? b : m);
-		}else
-			std::cout << "0 ";
+		interval.push_back(std::make_pair(a, b));
+		m = (b > m ? b : m);
 	}
 	
 	std::vector<int> simple;
