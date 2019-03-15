@@ -18,9 +18,7 @@ def test(command, expected_code, expected_value):
         return
     if expected_code != 255:
         i = 0
-        print(out)
         out = (str(out[0])).replace("b", "").replace('\'', "")[:-1].split(" ")
-        print(out)
         for line in out:
             try:
                 if int(line) != expected_value[i]:
