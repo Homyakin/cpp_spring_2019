@@ -2,95 +2,78 @@
 #include "numbers.dat"
 #include <vector>
 #include <cstdlib>
+#include <utility>
 #include <cmath>
 
 
+using pair_ii = std::pair<int, int>;
+
 int main(int argc, char* argv[])
 {
-	if(argc == 0 || argc % 2 != 0)
+	if(argc == 1 || argc % 2 == 0)
 	{
 		return -1;
 	}
-	std::vector<int> first;
-	std::vector<int> second;
-	int intervals = 0;
-	for(int i = 0; i < argc; i+=2)
+	
+	std::vector<pair_ii> interval;
+	int m = 0;
+	for(int i = 1; i < argc; i+=2)
 	{
 		int a = std::atoi(argv[i]), b = std::atoi(argv[i + 1]);
 		if(a <= b)
 		{
-			if(intervals)
-			{
-				int j = 0;
-				while(j < intervals && first[j] < a) ++j;
-				int k = j;
-				while(k < intervals && second[k] < b) ++k;
-				bool f = false, s = false;
-				if(!(a >= first[j] && a <= second[j]))
-				{
-					++j;
-					f = true;
-				}
-				if(!(b >= first[k] && b <= second[k]))
-				{
-					++k;
-					s = true;
-				}
-				if(j < intervals && f)
-					first.insert(first.begin() + j,a);
-				else if(f)
-					first.push_back(a);
-				if(k < intervals && s)
-					second.insert(first.begin() + k, b);
-				else if(s)
-					second.push_back(b);
-				if(k - j && (s || f))
-				{
-					first.erase(first.begin() + j + 1, first.begin() + k - 1);
-				}
-				
-			}else
-			{
-				first.push_back(a);
-				second.push_back(b);
-				++intervals;
-			}
-		}
+			interval.push_back(std::make_pair(a, b));
+			m = (b > m ? b : m);
+		}else
+			std::cout << "0 ";
 	}
+	
 	std::vector<int> simple;
+	std::vector<int> Data2;
 	simple.push_back(2);
-	int m = second[intervals - 1];
+	int k = 0;
+	while(Data[k] < 2) ++k;
+	while(Data[k] == 2)
+	{
+		++k;
+		Data2.push_back(2);
+	}
 	for(int i = 3; i <= m; i+=2)
 	{
 		bool sim = true;
-		for(int j = 0; j < simple.size() && simple[j] <= sqrt(i); ++j)
+		for(int j = 0; j < simple.size() && simple[j] <= std::sqrt(i); ++j)
 		{
-			if(i % j == 0)
+			if(i % simple[j] == 0)
 			{
 				sim = false;
 				break;
 			}
 		}
-		if(sim) simple.push_back(i);
-	}
-	int cnt = 0;
-	for(int i = 0; i < first.size(); ++i)
-	{
-		int j = 0;
-		while(Data[j] < first[i]) ++j;
-		while(Data[j] <= second[j])
+		if(sim)
 		{
-			for(int k = 0; k < simple.size(); ++k)
+			while(Data[k] < i) ++k;
+			while(Data[k] == i)
 			{
-				if(simple[k] == Data[j])
-				{
-					++cnt;
-					break;
-				}
+				++k;
+				Data2.push_back(i);
 			}
-			++j;
+			simple.push_back(i);
 		}
 	}
-	std::cout << cnt;
+	
+	for(int i = 0; i < interval.size(); ++i)
+	{
+		int j = 0;
+		int cnt = 0;
+		
+		while(j < Data2.size() && Data2[j] < interval[i].first) ++j;
+		while(j < Data2.size() && Data2[j] <= interval[i].second)
+		{
+			
+			++cnt;
+			++j;
+		}
+		std::cout << cnt << " ";
+	}
 	return 0;
 }
