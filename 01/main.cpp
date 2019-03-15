@@ -2,15 +2,14 @@
 #include "numbers.dat"
 #include <vector>
 #include <cstdlib>
-
+#include <cmath>
 
 
 int main(int argc, char* argv[])
 {
 	if(argc == 0 || argc % 2 != 0)
 	{
-		std::cout << -1;
-		return 0;
+		return -1;
 	}
 	std::vector<int> first;
 	std::vector<int> second;
@@ -58,10 +57,40 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-	for(int i = 0; i < Size; ++i)
+	std::vector<int> simple;
+	simple.push_back(2);
+	int m = second[intervals - 1];
+	for(int i = 3; i <= m; i+=2)
 	{
-		std::cout << Data[i] << " ";
+		bool sim = true;
+		for(int j = 0; j < simple.size() && simple[j] <= sqrt(i); ++j)
+		{
+			if(i % j == 0)
+			{
+				sim = false;
+				break;
+			}
+		}
+		if(sim) simple.push_back(i);
 	}
-	std::cout << Size;
+	int cnt = 0;
+	for(int i = 0; i < first.size(); ++i)
+	{
+		int j = 0;
+		while(Data[j] < first[i]) ++j;
+		while(Data[j] <= second[j])
+		{
+			for(int k = 0; k < simple.size(); ++k)
+			{
+				if(simple[k] == Data[j])
+				{
+					++cnt;
+					break;
+				}
+			}
+			++j;
+		}
+	}
+	std::cout << cnt;
 	return 0;
 }
