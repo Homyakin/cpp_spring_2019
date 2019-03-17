@@ -2,31 +2,12 @@
 #include "numbers.dat"
 #include <vector>
 #include <cstdlib>
-#include <utility>
 #include <cmath>
 
 
-using pair_ii = std::pair<int, int>;
-
-int main(int argc, char* argv[])
+void create_simple_data(std::vector<int> & Data2)
 {
-	if(argc == 1 || argc % 2 == 0)
-	{
-		return -1;
-	}
-	
-	std::vector<pair_ii> interval;
-	int m = 0;
-	for(int i = 1; i < argc; i+=2)
-	{
-		int a = std::atoi(argv[i]), b = std::atoi(argv[i + 1]);
-		interval.push_back(std::make_pair(a, b));
-		if(b >= a)
-			m = (b > m ? b : m);
-	}
-	
 	std::vector<int> simple;
-	std::vector<int> Data2;
 	simple.push_back(2);
 	int k = 0;
 	while(Data[k] < 2) ++k;
@@ -35,7 +16,7 @@ int main(int argc, char* argv[])
 		++k;
 		Data2.push_back(2);
 	}
-	for(int i = 3; i <= m; i+=2)
+	for(int i = 3; i <= Data[Size - 1]; i+=2)
 	{
 		bool sim = true;
 		for(int j = 0; j < simple.size() && simple[j] <= std::sqrt(i); ++j)
@@ -57,20 +38,38 @@ int main(int argc, char* argv[])
 			simple.push_back(i);
 		}
 	}
-	
-	for(int i = 0; i < interval.size(); ++i)
+}
+
+int count_simple(std::vector<int> & Data2, int a, int b)
+{
+	if(a > b) return 0;
+	int j = 0;
+	int cnt = 0;
+	while(j < Data2.size() && Data2[j] < a) ++j;
+	while(j < Data2.size() && Data2[j] <= b)
 	{
-		int j = 0;
-		int cnt = 0;
-		
-		while(j < Data2.size() && Data2[j] < interval[i].first) ++j;
-		while(j < Data2.size() && Data2[j] <= interval[i].second)
-		{
-			
-			++cnt;
-			++j;
-		}
-		std::cout << cnt << " ";
+		++cnt;
+		++j;
 	}
+	return cnt;
+}
+
+int main(int argc, char* argv[])
+{
+	if(argc == 1 || argc % 2 == 0)
+	{
+		return -1;
+	}
+	
+	std::vector<int> Data2;
+	create_simple_data(Data2);
+	
+	int m = 0;
+	for(int i = 1; i < argc; i+=2)
+	{
+		int a = std::atoi(argv[i]), b = std::atoi(argv[i + 1]);
+		std::cout << count_simple(Data2, std::atoi(argv[i]), std::atoi(argv[i + 1])) << std::endl;
+	}
+	
 	return 0;
 }
