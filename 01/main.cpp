@@ -16,7 +16,7 @@ void create_simple_data(std::vector<int> & Data2)
 		++k;
 		Data2.push_back(2);
 	}
-	for(int i = 3; i <= Data[Size - 1]; i+=2)
+	for(int i = 3; i <= Data[Size - 1]; i += 2)
 	{
 		bool sim = true;
 		for(int j = 0; j < simple.size() && simple[j] <= std::sqrt(i); ++j)
@@ -64,12 +64,8 @@ int main(int argc, char* argv[])
 	std::vector<int> Data2;
 	create_simple_data(Data2);
 	
-	int m = 0;
-	for(int i = 1; i < argc; i+=2)
-	{
-		int a = std::atoi(argv[i]), b = std::atoi(argv[i + 1]);
+	for(int i = 1; i < argc; i += 2)
 		std::cout << count_simple(Data2, std::atoi(argv[i]), std::atoi(argv[i + 1])) << std::endl;
-	}
 	
 	return 0;
 }
