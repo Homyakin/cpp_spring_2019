@@ -16,9 +16,8 @@ def test(command, expected_code, expected_value):
     if code != expected_code:
         print('return value', expected_code, '(expected) !=', code)
         return
-    if expected_code != 255:
+    if expected_code != 4294967295:
         i = 0
-        out = (str(out[0])).replace("b", "").replace('\'', "")[:-1].split(" ")
         for line in out:
             try:
                 if int(line) != expected_value[i]:
@@ -45,9 +44,9 @@ test('test 99999 1', 0, [0])
 test('test 97 62285', 0, [4539])
 test('test 41753 91449', 0, [7288])
 test('test 3 99993', 0, [9343])
-test('test 3', 255, [])
-test('test', 255, [])
-test('test 3 3 3', 255, [])
+test('test 3', 4294967295, [])
+test('test', 4294967295, [])
+test('test 3 3 3', 4294967295, [])
 test('test 12 18 1 99999', 0, [1, 9344])
 
 print('bencmarking')
