@@ -40,7 +40,7 @@ void create_simple_data(std::vector<int> & Data2)
 	}
 }
 
-int count_simple(std::vector<int> & Data2, int a, int b)
+int count_simple(const std::vector<int> & Data2, int a, int b)
 {
 	if(a > b) return 0;
 	int j = 0;
