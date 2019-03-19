@@ -2,7 +2,6 @@
 #include "numbers.dat"
 #include <vector>
 #include <cstdlib>
-#include <cmath>
 
 
 void create_simple_data(std::vector<int> & Data2)
@@ -19,7 +18,7 @@ void create_simple_data(std::vector<int> & Data2)
 	for(int i = 3; i <= Data[Size - 1]; i += 2)
 	{
 		bool sim = true;
-		for(int j = 0; j < simple.size() && simple[j] <= std::sqrt(i); ++j)
+		for(int j = 0; j < simple.size() && simple[j] * simple[j] <= i; ++j)
 		{
 			if(i % simple[j] == 0)
 			{
