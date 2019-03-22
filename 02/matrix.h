@@ -18,27 +18,13 @@ public:
 	{
 		if (row >= rows || row < 0)
 			throw std::out_of_range("Wrong row");
-		try
-		{
-			return Proxy(m, row, columns);
-		}
-		catch (std::out_of_range& t)
-		{
-			throw t;
-		}
+		return Proxy(m, row, columns);
 	}
 	const Proxy operator[](size_t row) const
 	{
 		if (row >= rows || row < 0)
 			throw std::out_of_range("Wrong row");
-		try
-		{
-			return Proxy(m, row, columns);
-		}
-		catch (std::out_of_range& t)
-		{
-			throw t;
-		}
+		return Proxy(m, row, columns);
 	}
 	Matrix& operator*=(int a)
 	{
