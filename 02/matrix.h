@@ -49,6 +49,10 @@ public:
 	{
 		return !(*this == other);
 	}
+	~Matrix()
+	{
+		delete[] m;
+	}
 
 private:
 	size_t rows;
