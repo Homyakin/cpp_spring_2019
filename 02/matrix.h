@@ -9,6 +9,23 @@ struct Matrix
 	{
 		m = new int[rows * columns];
 	}
+	Matrix(const Matrix& other): rows(other.getRows()), columns(other.getRows())
+	{
+		m = new int[rows * columns];
+		for (size_t i = 0; i < rows; ++i)
+			for (size_t j = 0; j < columns; ++j)
+				m[i * columns + j] = other[i][j];
+	}
+	Matrix& operator=(const Matrix& other)
+	{
+		delete[] m;
+		rows = other.getRows();
+		columns = other.getRows();
+		m = new int[rows * columns];
+		for (size_t i = 0; i < rows; ++i)
+			for (size_t j = 0; j < columns; ++j)
+				m[i * columns + j] = other[i][j];
+	}
 	size_t getRows() const { return rows; }
 	size_t getColumns() const { return columns; }
 private:
@@ -32,6 +49,12 @@ public:
 			for (size_t j = 0; j < columns; ++j)
 				m[i * columns + j] *= a;
 		return *this;
+	}
+	Matrix operator*(int a)
+	{
+		Matrix temp(*this);
+		temp *= a;
+		return temp;
 	}
 	bool operator==(const Matrix& other)
 	{
