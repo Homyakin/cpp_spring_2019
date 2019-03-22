@@ -54,7 +54,7 @@ int main()
     check(m1 != m3);
     check(m1 == m4);
     check(m1 != m5);
-
+	auto m6 = m1 *= 5;
     std::cout << "done\n";
 
     return 0;
