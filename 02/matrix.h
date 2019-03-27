@@ -19,13 +19,16 @@ struct Matrix
 	Matrix& operator=(const Matrix& other)
 	{
 		if(this != &other)
+		{
+			int* tmp = new int[other.getRows() * getColumns()];
 			delete[] matrix;
 			rows = other.getRows();
-			columns = other.getRows();
-			matrix = new int[rows * columns];
+			columns = other.getColumns();
+			matrix = tmp;
 			for (size_t i = 0; i < rows; ++i)
 				for (size_t j = 0; j < columns; ++j)
 					matrix[i * columns + j] = other[i][j];
+		}
 		return *this;
 	}
 	size_t getRows() const { return rows; }
