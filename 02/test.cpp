@@ -55,6 +55,8 @@ int main()
     check(m1 == m4);
     check(m1 != m5);
 	auto m6 = m1 *= 5;
+	Matrix m7(0, 0);
+	m7 = m1;
     std::cout << "done\n";
 
     return 0;
