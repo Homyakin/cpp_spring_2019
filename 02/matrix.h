@@ -18,13 +18,15 @@ struct Matrix
 	}
 	Matrix& operator=(const Matrix& other)
 	{
-		delete[] matrix;
-		rows = other.getRows();
-		columns = other.getRows();
-		matrix = new int[rows * columns];
-		for (size_t i = 0; i < rows; ++i)
-			for (size_t j = 0; j < columns; ++j)
-				matrix[i * columns + j] = other[i][j];
+		if(this != &other)
+			delete[] matrix;
+			rows = other.getRows();
+			columns = other.getRows();
+			matrix = new int[rows * columns];
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < columns; ++j)
+					matrix[i * columns + j] = other[i][j];
+		return *this;
 	}
 	size_t getRows() const { return rows; }
 	size_t getColumns() const { return columns; }
