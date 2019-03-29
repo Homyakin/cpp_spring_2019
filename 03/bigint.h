@@ -77,20 +77,8 @@ public:
 	BigInt& operator+=(const BigInt& other)
 	{
 		bool rest = false;
-		if (sign != other.sign)
-		{
-			if (sign >= 0 && *this < -other)
-			{
-				*this = -(-other - *this);
-			}
-			else if (sign >= 0) *this -= -other;
-			else if (other < -*this)
-			{
-				*this = -(-*this - other);
-			}
-			else *this = other - -*this;
-		}
-		else
+		//складываем числа одинаковых знаков
+		if((sign >= 0 && other.sign >= 0) || (sign < 0 && other.sign < 0))
 		{
 			for (int i = 0; i < std::min(rank, other.rank); ++i)
 			{
@@ -103,10 +91,35 @@ public:
 					number[i] %= numeral_system;
 				}
 			}
+			
 			if (rest)
 			{
 				realloc(rank + 1);
 				number[rank - 1] = 1;
+			}
+			if(sign == 0 && (rank > 1 || number[0] != 0)) sign = 1;
+		}
+		else
+		{
+			if (sign >= 0 && *this < -other)
+			{
+				//x < |-y|; x + -y = -(y - x)
+				*this = -(-other - *this);
+			}
+			else if (sign >= 0) 
+			{
+				//x >= |-y|; x + -y = x - y
+				*this -= -other;
+			}
+			else if (other < -*this)
+			{
+				//y < |-x|; -x + y = -(x - y)
+				*this = -(-*this - other);
+			}
+			else 
+			{
+				//y >= |-x|; -x + y = y - x
+				*this = other - -*this;
 			}
 		}
 		return *this;
@@ -114,7 +127,8 @@ public:
 
 	BigInt& operator-=(const BigInt& other)
 	{
-		if (sign >= 0 && other.sign >= 0)
+		//вычитаем из большего положительного меньшее
+		if (sign >= 0 && other.sign >= 0 && *this >= other)
 		{
 			for (int i = 0; i < other.rank; ++i)
 			{
@@ -125,6 +139,7 @@ public:
 				}
 				number[i] -= other.number[i];
 			}
+			
 			size_t clr = 0;
 			for (int i = rank - 1; i >= 0 && number[i] == 0; ++i) ++clr;
 			if (clr == rank)
@@ -139,14 +154,22 @@ public:
 		{
 			if (sign == -1 && other.sign == -1)
 			{
+				//-x - -y = -x + y
 				*this += -other;
 			}
 			else if (sign == -1 && other.sign >= 0)
 			{
+				//-x - y = -(x + y)
 				*this = -(-*this + other);
+			}
+			else if (sign >= 0 && other.sign >= 0)
+			{
+				//x < y; x - y = -(y - x)
+				*this = -(other - *this);
 			}
 			else
 			{
+				//x - -y = x + y
 				*this += -other;
 			}
 		}
@@ -205,6 +228,7 @@ bool operator<(const BigInt& a, const BigInt& b)
 		return (a.sign == -1 ? false : true);
 	else if (b.rank < a.rank)
 		return (a.sign == -1 ? true : false);
+	
 	for (int i = a.rank - 1; i >= 0; --i)
 	{
 		if (a.number[i] < b.number[i])
@@ -212,6 +236,7 @@ bool operator<(const BigInt& a, const BigInt& b)
 		else if (b.number[i] < a.number[i])
 			return (a.sign == -1 ? true : false);
 	}
+	
 	return false;
 }
 
