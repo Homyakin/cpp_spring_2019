@@ -97,11 +97,11 @@ int main()
 	checkEqual(BigInt(-10) - BigInt(-10), "0");
 
 	checkEqual(BigInt(0) + BigInt(-1), "-1");
-	checkEqual(BigInt(0) - BigInt(1), "-1"); //ОШИБКА!!!!!!!!
+	checkEqual(BigInt(0) - BigInt(1), "-1"); 
 
 	checkEqual(BigInt(100) - BigInt(100), "0");
-	//checkEqual(BigInt(99) - BigInt(100), "-1"); //ОШИБКА!!!!!!!!
-	//checkEqual(BigInt(10) - BigInt(11), "-1"); //ОШИБКА!!!!!!!!
+	checkEqual(BigInt(99) - BigInt(100), "-1");
+	checkEqual(BigInt(10) - BigInt(11), "-1"); 
 	checkEqual(BigInt(20) - BigInt(19), "1");
 
 	for (int i = -21; i <= 21; ++i)
@@ -110,8 +110,8 @@ int main()
 		{
 			check(i, j);
 		}
-	}//ОШИБКА!!!
-
+	}
+	
 	const int64_t step = std::numeric_limits<uint32_t>::max() / 99;
 	const int64_t lower = std::numeric_limits<int32_t>::min() + step;
 	const int64_t upper = std::numeric_limits<int32_t>::max() - step;
