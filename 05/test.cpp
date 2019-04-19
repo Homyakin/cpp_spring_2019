@@ -14,9 +14,9 @@ void say(std::string word, bool ping)
 {
 	for (int i = 0; i < N; ++i)
 	{
+		std::lock_guard<std::mutex> lock(m);
 		if (last_ping != ping)
 		{
-			std::lock_guard<std::mutex> lock(m);
 			std::cout << word << std::endl;
 			last_ping = ping;
 		}
@@ -25,8 +25,11 @@ void say(std::string word, bool ping)
 			--i;
 		}
 	}
-	data = true;
-	dataReady.notify_one();
+	if (!ping)
+	{
+		data = true;
+		dataReady.notify_one();
+	}
 }
 
 int main()
