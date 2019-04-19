@@ -26,9 +26,9 @@ private:
 	static constexpr char SEPARATOR = ' ';
 
 	template<class T, class... Args>
-	Error process(T&& valueue, Args&& ... args) 
+	Error process(T&& value, Args&& ... args) 
 	{
-		return ((process(std::forward<T>(valueue)) == Error::NoError) ?
+		return ((process(std::forward<T>(value)) == Error::NoError) ?
 			process(std::forward<Args>(args)...) :
 			Error::CorruptedArchive);
 	}
@@ -62,38 +62,38 @@ private:
 	static constexpr char SEPARATOR = ' ';
 	
 	template<class T, class... Args>
-	Error process(T&& valueue, Args&&... args) 
+	Error process(T&& value, Args&&... args) 
 	{
-		if (process(std::forward<T>(valueue)) == Error::CorruptedArchive)
+		if (process(std::forward<T>(value)) == Error::CorruptedArchive)
 			return Error::CorruptedArchive;
 		else
 			return process(std::forward<Args>(args)...);
 	}
 	
-	Error process(bool& valueue) 
+	Error process(bool& value) 
 	{
 		std::string in;
 		in_ >> in;
 		if(!in.compare("true"))
-			valueue = true;
+			value = true;
 		else if(!in.compare("false"))
-			valueue = false;
+			value = false;
 		else
 			return Error::CorruptedArchive;
 		return Error::NoError;
 	}
 
-	Error process(uint64_t& valueue) 
+	Error process(uint64_t& value) 
 	{
 		std::string in;
 		in_ >> in;
-		valueue = 0;
+		value = 0;
 		for(auto i : in)
 		{
 			if(i >= '0' && i <= '9') 
 			{
-				valueue *= 10;
-				valueue += i - '0';
+				value *= 10;
+				value += i - '0';
 			} 
 			else
 				return Error::CorruptedArchive;
