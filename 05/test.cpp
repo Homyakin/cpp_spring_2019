@@ -9,7 +9,7 @@
 std::mutex m;
 std::condition_variable dataReady;
 std::atomic<bool> last_ping = false;
-const int N = 5;
+const int N = 500000;
 
 
 void say(std::string word, bool ping)
