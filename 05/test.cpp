@@ -1,17 +1,15 @@
 #include <iostream>
-#include <mutex>
 #include <thread>
 #include <string>
+#include <atomic>
 
-std::mutex m;
-bool last_ping = false;
+std::atomic<bool> last_ping = false;
 const int N = 500000;
 
 void say(std::string word, bool ping)
 {
 	for (int i = 0; i < N; ++i)
 	{
-		std::lock_guard<std::mutex> lock(m);
 		if (last_ping != ping)
 		{
 			std::cout << word << std::endl;
