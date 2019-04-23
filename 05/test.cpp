@@ -19,12 +19,9 @@ void say(std::string word, bool ping)
 		std::unique_lock<std::mutex> lock(m);
 		while (last_ping == ping)
 				dataReady.wait(lock);
-		if (last_ping != ping)
-		{
-			std::cout << word << std::endl;
-			last_ping = ping;
-			dataReady.notify_all();
-		}
+		std::cout << word << std::endl;
+		last_ping = ping;
+		dataReady.notify_all();
 	}
 }
 
