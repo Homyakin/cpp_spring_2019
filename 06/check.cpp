@@ -7,8 +7,8 @@ int main()
 {
 	std::ifstream f("data.bin", std::ios::in | std::ios::binary);
 	uint x1, x2;
-	f >> x1;
-	while(f >> x2)
+	f.read((char*)&x1, sizeof(uint));
+	while(f.read((char*)&x2, sizeof(uint)))
 	{
 		if(x2 < x1) 
 		{
