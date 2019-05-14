@@ -52,7 +52,7 @@ void unite_two_files(const std::string& fileName1, const std::string& fileName2,
 	fout.close();
 }
 
-void unite_files(std::vector<std::string>& fileNames,const std::string& output)
+void unite_files(std::vector<std::string>& fileNames, const std::string& output)
 {
 	while(fileNames.size() > 2)
 	{
