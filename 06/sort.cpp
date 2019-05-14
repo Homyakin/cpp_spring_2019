@@ -54,7 +54,7 @@ void unite_two_files(const std::string& fileName1, const std::string& fileName2,
 
 void unite_files(std::vector<std::string>& fileNames,const std::string& output)
 {
-	while(fileNames.size() > 1)
+	while(fileNames.size() > 2)
 	{
 		std::vector<std::string> newNames;
 		for(size_t i = 0; i < fileNames.size(); i += 2)
@@ -69,15 +69,7 @@ void unite_files(std::vector<std::string>& fileNames,const std::string& output)
 		if(fileNames.size() % 2) newNames.push_back(fileNames[fileNames.size() - 1]);
 		fileNames = newNames;
 	}
-
-	std::ifstream f(fileNames[0], std::ios::binary);
-	std::ofstream fout(output, std::ios::trunc | std::ios::binary);
-	for(uint x; f.read((char*)&x, sizeof(uint));)
-	{
-		fout.write((char*)&x, sizeof(uint));
-	}
-	f.close();
-	fout.close();
+	unite_two_files(fileNames[0], fileNames[1], output);
 }
 
 void sort_file(const std::string& fileName, size_t numbers)
