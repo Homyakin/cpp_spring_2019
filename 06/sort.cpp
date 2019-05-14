@@ -16,14 +16,8 @@ const size_t MAX_THREAD_NUMBERS = MAX_THREAD_RAM / 64;
 
 size_t count_numbers(const std::string& fileName)
 {
-	std::ifstream f(fileName, std::ios::binary);
-	size_t total = 0;
-	for(uint x; f.read((char*)&x, sizeof(uint));)
-	{
-		++total;
-	}
-	f.close();
-	return total;
+	std::ifstream in(fileName, std::ios::ate | std::ios::binary);
+	return in.tellg() / sizeof(uint);
 }
 
 void unite_two_files(const std::string& fileName1, const std::string& fileName2, const std::string& outName)
