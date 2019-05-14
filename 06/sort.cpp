@@ -145,8 +145,6 @@ void start_sort(const std::string& fileName, size_t total)
 	unite_files(fileNames, fileName);
 }
 
-
-
 int main()
 {
 	std::string fileName = "data.bin";
